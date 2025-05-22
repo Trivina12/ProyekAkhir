@@ -1,4 +1,6 @@
 package com.pemesananmakanan;
+import java.util.*;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,6 +19,55 @@ public class FormMenu extends javax.swing.JFrame {
     public FormMenu() {
         initComponents();
     }
+    
+    private void prosesPesanan() {
+    String input = txtKodePesanan.getText().trim(); // Ambil input dari JTextArea
+
+    if (input.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Silakan masukkan pesanan terlebih dahulu.");
+        return;
+    }
+
+    // Daftar harga berdasarkan kode
+    Map<String, Integer> daftarHarga = new HashMap<>();
+    daftarHarga.put("C1", 30000); // Nasi Goreng
+    daftarHarga.put("C2", 28000); // Mi Goreng
+    daftarHarga.put("C3", 28000); // Mi Rebus
+    daftarHarga.put("D1", 10000); // Jus Mangga
+    daftarHarga.put("D2", 5000);  // Air Mineral
+    daftarHarga.put("D3", 12000); // Es Campur
+
+    int total = 0;
+    StringBuilder struk = new StringBuilder();
+    struk.append("Struk Pemesanan:\n");
+
+    try {
+        String[] pesanan = input.split(";"); // Format: C1,2;D3,1
+        for (String item : pesanan) {
+            String[] detail = item.trim().split(",");
+            if (detail.length != 2) continue;
+
+            String kode = detail[0].trim().toUpperCase();
+            int jumlah = Integer.parseInt(detail[1].trim());
+
+            if (daftarHarga.containsKey(kode)) {
+                int harga = daftarHarga.get(kode);
+                int subtotal = harga * jumlah;
+                total += subtotal;
+                struk.append(kode).append(" x ").append(jumlah)
+                     .append(" = Rp").append(subtotal).append("\n");
+            } else {
+                struk.append("Kode tidak dikenal: ").append(kode).append("\n");
+            }
+        }
+
+        struk.append("\nTotal Bayar: Rp").append(total);
+        JOptionPane.showMessageDialog(this, struk.toString());
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Format input salah. Gunakan format: C1,2;D3,1");
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,10 +80,10 @@ public class FormMenu extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        txtKodePesanan = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtJumlah = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -44,7 +95,7 @@ public class FormMenu extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtKodePesanan.setViewportView(jTextArea1);
 
         jLabel3.setText("Masukkan jumlah makanan");
 
@@ -58,10 +109,10 @@ public class FormMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtKodePesanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(778, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -76,11 +127,11 @@ public class FormMenu extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtKodePesanan, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -131,8 +182,8 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtJumlah;
+    private javax.swing.JScrollPane txtKodePesanan;
     // End of variables declaration//GEN-END:variables
 }
