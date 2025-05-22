@@ -37,7 +37,7 @@ public class FormMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resource/menu.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/menu.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jLabel2.setText("Masukkan kode makanan");
@@ -48,9 +48,7 @@ public class FormMenu extends javax.swing.JFrame {
 
         jLabel3.setText("Masukkan jumlah makanan");
 
-        jTextField1.setText("jTextField1");
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resource/Minuman.jpeg"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Minuman.jpeg"))); // NOI18N
         jLabel4.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
