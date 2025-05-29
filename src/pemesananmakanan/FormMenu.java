@@ -1,6 +1,12 @@
 package pemesananmakanan;
 import java.util.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class FormMenu extends javax.swing.JFrame {
     public FormMenu() {
@@ -15,46 +21,57 @@ public class FormMenu extends javax.swing.JFrame {
         return;
     }
 
-    Map<String, Integer> daftarHarga = new HashMap<>();
-    daftarHarga.put("C1", 30000); // Nasi Goreng
-    daftarHarga.put("C2", 28000); // Mi Goreng
-    daftarHarga.put("C3", 28000); // Mi Rebus
-    daftarHarga.put("D1", 10000); // Jus Mangga
-    daftarHarga.put("D2", 5000);  // Air Mineral
-    daftarHarga.put("D3", 12000); // Es Campur
+    Map<String, Object> daftarMenu = new HashMap<>();
+    daftarMenu.put("C1", new Makanan("C1", "Nasi Goreng", 30000));
+    daftarMenu.put("C2", new Makanan("C2", "Mi Goreng", 28000));
+    daftarMenu.put("C3", new Makanan("C3", "Mi Rebus", 28000));
+    daftarMenu.put("D1", new Minuman("D1", "Jus Mangga", 10000));
+    daftarMenu.put("D2", new Minuman("D2", "Air Mineral", 5000));
+    daftarMenu.put("D3", new Minuman("D3", "Es Campur", 12000));
 
     int total = 0;
-    StringBuilder struk = new StringBuilder();
-    struk.append("Struk Pemesanan:\n");
+    List<Pemesanan> daftarPesanan = new ArrayList<>();
+    StringBuilder struk = new StringBuilder("Struk Pemesanan:\n");
 
-    try {
-        String[] pesanan = input.split(";"); 
-        for (String item : pesanan) {
-            String[] detail = item.trim().split(",");
-            if (detail.length != 2) continue;
+        try {
+            String[] pesananArray = input.split(";");
+            for (String item : pesananArray) {
+                String[] detail = item.trim().split(",");
+                if (detail.length != 2) continue;
 
-            String kode = detail[0].trim().toUpperCase();
-            
-            int jumlah = Integer.parseInt(detail[1].trim());
+                String kode = detail[0].trim().toUpperCase();
+                int jumlah = Integer.parseInt(detail[1].trim());
 
-            if (daftarHarga.containsKey(kode)) {
-                int harga = daftarHarga.get(kode);
-                int subtotal = harga * jumlah;
-                total += subtotal;
-                struk.append(kode).append(" x ").append(jumlah)
-                     .append(" = Rp").append(subtotal).append("\n");
-            } else {
-                struk.append("Kode tidak dikenal: ").append(kode).append("\n");
+                if (daftarMenu.containsKey(kode)) {
+                    Object menu = daftarMenu.get(kode);
+                    String nama = "";
+                    int harga = 0;
+
+                    if (menu instanceof Makanan m) {
+                        nama = m.getNama();
+                        harga = m.getHarga();
+                    } else if (menu instanceof Minuman m) {
+                        nama = m.getNama();
+                        harga = m.getHarga();
+                    }
+
+                    Pemesanan pesanan = new Pemesanan(kode, nama, harga, jumlah);
+                    daftarPesanan.add(pesanan);
+                    total += pesanan.getSubtotal();
+                    struk.append(pesanan.toString()).append("\n");
+                } else {
+                    struk.append("Kode tidak dikenal: ").append(kode).append("\n");
+                }
             }
+
+            struk.append("\nTotal Bayar: Rp").append(total);
+            JOptionPane.showMessageDialog(this, struk.toString());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Format input salah. Gunakan format: C1,2;D3,1");
         }
-
-        struk.append("\nTotal Bayar: Rp").append(total);
-        JOptionPane.showMessageDialog(this, struk.toString());
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Format input salah. Gunakan format: C1,2;D3,1");
-    }
 }
+    // </editor-fold>
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -125,30 +142,29 @@ public class FormMenu extends javax.swing.JFrame {
     private void btnPesanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesanActionPerformed
          prosesPesanan();
     }//GEN-LAST:event_btnPesanActionPerformed
+    
+   private void initComponents() {
+        jLabel1 = new JLabel("Masukkan Kode dan Jumlah (misal: C1,2;D1,1)");
+        jTextArea1 = new JTextField(30);
+        btnPesan = new JButton("Pesan");
+
+        btnPesan.addActionListener(evt -> prosesPesanan());
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Form Pemesanan");
+
+        JPanel panel = new JPanel();
+        panel.add(jLabel1);
+        panel.add(jTextArea1);
+        panel.add(btnPesan);
+
+        add(panel);
+        pack();
+        setLocationRelativeTo(null); // Tengah layar
+    }
 
     public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormMenu().setVisible(true);
-            }
-        });
+        SwingUtilities.invokeLater(() -> new FormMenu().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
