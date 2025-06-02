@@ -1,11 +1,5 @@
 package pemesananmakanan;
-import java.util.*;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 public class FormMenu extends javax.swing.JFrame {
@@ -13,66 +7,30 @@ public class FormMenu extends javax.swing.JFrame {
         initComponents();
     }
     
-    private void prosesPesanan() {
-    String input = txtKode.getText().trim();
+   private Pemesanan pemesanan = new Pemesanan();
 
-    if (input.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Silakan masukkan pesanan terlebih dahulu.");
+   private void prosesPesanan() {
+    String kode = txtKode.getText().trim().toUpperCase();
+    String jumlahStr = txtJumlah.getText().trim();
+
+    if (kode.isEmpty() || jumlahStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Kode dan jumlah harus diisi.");
         return;
     }
 
-    Map<String, Object> daftarMenu = new HashMap<>();
-    daftarMenu.put("C1", new Makanan("C1", "Nasi Goreng", 30000));
-    daftarMenu.put("C2", new Makanan("C2", "Mi Goreng", 28000));
-    daftarMenu.put("C3", new Makanan("C3", "Mi Rebus", 28000));
-    daftarMenu.put("D1", new Minuman("D1", "Jus Mangga", 10000));
-    daftarMenu.put("D2", new Minuman("D2", "Air Mineral", 5000));
-    daftarMenu.put("D3", new Minuman("D3", "Es Campur", 12000));
+    try {
+        int jumlah = Integer.parseInt(jumlahStr);
+        pemesanan.tambahPesanan(kode, jumlah); 
 
-    int total = 0;
-    List<Pemesanan> daftarPesanan = new ArrayList<>();
-    StringBuilder struk = new StringBuilder("Struk Pemesanan:\n");
+        String struk = pemesanan.getStruk(); 
+        txtNota.setText(struk);              
 
-        try {
-            String[] pesananArray = input.split(";");
-            for (String item : pesananArray) {
-                String[] detail = item.trim().split(",");
-                if (detail.length != 2) continue;
-
-                String kode = detail[0].trim().toUpperCase();
-                int jumlah = Integer.parseInt(detail[1].trim());
-
-                if (daftarMenu.containsKey(kode)) {
-                    Object menu = daftarMenu.get(kode);
-                    String nama = "";
-                    int harga = 0;
-
-                    if (menu instanceof Makanan m) {
-                        nama = m.getNama();
-                        harga = m.getHarga();
-                    } else if (menu instanceof Minuman m) {
-                        nama = m.getNama();
-                        harga = m.getHarga();
-                    }
-
-                    Pemesanan pesanan = new Pemesanan(kode, nama, harga, jumlah);
-                    daftarPesanan.add(pesanan);
-                    total += pesanan.getSubtotal();
-                    struk.append(pesanan.toString()).append("\n");
-                } else {
-                    struk.append("Kode tidak dikenal: ").append(kode).append("\n");
-                }
-            }
-
-            struk.append("\nTotal Bayar: Rp").append(total);
-            JOptionPane.showMessageDialog(this, struk.toString());
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Format input salah. Gunakan format: C1,2;D3,1");
-        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Jumlah harus berupa angka.");
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
 }
-    // </editor-fold>
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
