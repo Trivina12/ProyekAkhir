@@ -14,7 +14,7 @@ public class FormMenu extends javax.swing.JFrame {
     }
     
     private void prosesPesanan() {
-    String input = jTextArea1.getText().trim();
+    String input = txtKode.getText().trim();
 
     if (input.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Silakan masukkan pesanan terlebih dahulu.");
@@ -77,21 +77,24 @@ public class FormMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextArea1 = new javax.swing.JTextField();
+        lblKeterangan = new javax.swing.JLabel();
+        lblMakanan = new javax.swing.JLabel();
+        lblMinuman = new javax.swing.JLabel();
+        txtKode = new javax.swing.JTextField();
+        txtJumlah = new javax.swing.JTextField();
         btnPesan = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtNota = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/menu.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
+        lblKeterangan.setText("Masukkan  Kode dan Jumlah makanan ");
 
-        jLabel3.setText("Masukkan  Kode dan Jumlah makanan (Contoh C1,1)");
+        lblMakanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/menu.jpg"))); // NOI18N
+        lblMakanan.setText("jLabel1");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Minuman.jpeg"))); // NOI18N
-        jLabel4.setText("jLabel4");
+        lblMinuman.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Minuman.jpeg"))); // NOI18N
+        lblMinuman.setText("jLabel4");
 
         btnPesan.setText("Pesan");
         btnPesan.addActionListener(new java.awt.event.ActionListener() {
@@ -99,6 +102,10 @@ public class FormMenu extends javax.swing.JFrame {
                 btnPesanActionPerformed(evt);
             }
         });
+
+        txtNota.setColumns(20);
+        txtNota.setRows(5);
+        jScrollPane1.setViewportView(txtNota);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,31 +115,45 @@ public class FormMenu extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 985, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMinuman, javax.swing.GroupLayout.PREFERRED_SIZE, 985, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(jLabel3))
-                            .addComponent(btnPesan)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 985, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblKeterangan))
+                            .addComponent(lblMakanan, javax.swing.GroupLayout.PREFERRED_SIZE, 985, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnPesan)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblKeterangan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPesan)
+                        .addGap(35, 35, 35))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addComponent(lblMakanan, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnPesan)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addComponent(lblMinuman)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -142,26 +163,6 @@ public class FormMenu extends javax.swing.JFrame {
     private void btnPesanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesanActionPerformed
          prosesPesanan();
     }//GEN-LAST:event_btnPesanActionPerformed
-    
-   private void initComponents() {
-        jLabel1 = new JLabel("Masukkan Kode dan Jumlah (misal: C1,2;D1,1)");
-        jTextArea1 = new JTextField(30);
-        btnPesan = new JButton("Pesan");
-
-        btnPesan.addActionListener(evt -> prosesPesanan());
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Form Pemesanan");
-
-        JPanel panel = new JPanel();
-        panel.add(jLabel1);
-        panel.add(jTextArea1);
-        panel.add(btnPesan);
-
-        add(panel);
-        pack();
-        setLocationRelativeTo(null); // Tengah layar
-    }
 
     public static void main(String args[]) {
         SwingUtilities.invokeLater(() -> new FormMenu().setVisible(true));
@@ -169,9 +170,12 @@ public class FormMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPesan;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextArea1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblKeterangan;
+    private javax.swing.JLabel lblMakanan;
+    private javax.swing.JLabel lblMinuman;
+    private javax.swing.JTextField txtJumlah;
+    private javax.swing.JTextField txtKode;
+    private javax.swing.JTextArea txtNota;
     // End of variables declaration//GEN-END:variables
 }
