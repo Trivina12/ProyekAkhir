@@ -44,7 +44,7 @@ public String getStruk() {
         }
 
         int subtotal = jumlah * harga;
-        struk.append(jumlah).append("x ").append(nama).append(" = Rp").append(subtotal).append("\n");
+        struk.append(jumlah).append(" x ").append(nama).append(" = Rp").append(subtotal).append("\n");
         total += subtotal;
     }
 
