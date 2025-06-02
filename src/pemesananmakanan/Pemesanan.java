@@ -3,6 +3,7 @@ import java.util.HashMap;
 public class Pemesanan {
     private HashMap<String, Makanan> daftarMakanan = new HashMap<>();
     private HashMap<String, Minuman> daftarMinuman = new HashMap<>();
+    private HashMap<String, Integer> daftarPesanan = new HashMap<>();
 
     public Pemesanan() {
         daftarMakanan.put("C1", new Makanan("C1", "Nasi Goreng", 30000));
@@ -14,16 +15,40 @@ public class Pemesanan {
         daftarMinuman.put("D3", new Minuman("D3", "Es Campur", 18000));
     }
 
-    public String prosesPesanan(String kode, int jumlah) {
-        if (daftarMakanan.containsKey(kode)) {
-            Makanan m = daftarMakanan.get(kode);
-            return jumlah + "x " + m.getNama() + " = Rp" + (jumlah * m.getHarga());
-        } else if (daftarMinuman.containsKey(kode)) {
-            Minuman m = daftarMinuman.get(kode);
-            return jumlah + "x " + m.getNama() + " = Rp" + (jumlah * m.getHarga());
-        } else {
-            return "Kode tidak ditemukan: " + kode;
-        }
+  public void tambahPesanan(String kode, int jumlah) {
+    if (daftarMakanan.containsKey(kode) || daftarMinuman.containsKey(kode)) {
+        int jumlahLama = daftarPesanan.getOrDefault(kode, 0);
+        daftarPesanan.put(kode, jumlahLama + jumlah);
+    } else {
+        throw new IllegalArgumentException("Kode tidak ditemukan: " + kode);
     }
 }
 
+public String getStruk() {
+    StringBuilder struk = new StringBuilder("Struk Pemesanan:\n");
+    int total = 0;
+
+    for (String kode : daftarPesanan.keySet()) {
+        int jumlah = daftarPesanan.get(kode);
+        String nama = "";
+        int harga = 0;
+
+        if (daftarMakanan.containsKey(kode)) {
+            Makanan m = daftarMakanan.get(kode);
+            nama = m.getNama();
+            harga = m.getHarga();
+        } else if (daftarMinuman.containsKey(kode)) {
+            Minuman m = daftarMinuman.get(kode);
+            nama = m.getNama();
+            harga = m.getHarga();
+        }
+
+        int subtotal = jumlah * harga;
+        struk.append(jumlah).append("x ").append(nama).append(" = Rp").append(subtotal).append("\n");
+        total += subtotal;
+    }
+
+    struk.append("\nTotal Bayar: Rp").append(total);
+    return struk.toString();
+    }
+}
