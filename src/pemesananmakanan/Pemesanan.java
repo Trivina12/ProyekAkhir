@@ -15,7 +15,11 @@ public class Pemesanan {
         daftarMinuman.put("D3", new Minuman("D3", "Es Campur", 18000));
     }
 
-  public void tambahPesanan(String kode, int jumlah) {
+  public void tambahPesanan(String kode, int jumlah) { 
+    if (jumlah <= 0) {
+        throw new IllegalArgumentException("Jumlah yang dimasukkan harus lebih dari 0.");
+    }
+    
     if (daftarMakanan.containsKey(kode) || daftarMinuman.containsKey(kode)) {
         int jumlahLama = daftarPesanan.getOrDefault(kode, 0);
         daftarPesanan.put(kode, jumlahLama + jumlah);
